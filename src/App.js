@@ -1,25 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useEffect, useState} from 'react'
+import Notes from './components/Notes';
+import NoteForm from './components/NoteForm';
 
 function App() {
+
+  const [notes, setNotes] = useState([])
+
+  useEffect(() => {
+    loadDefaultValues()
+  }, []);
+
+ const loadDefaultValues = () => {
+    fetch(process.env.REACT_APP_NOTES_URL)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      setNotes(prevNotes => data)
+    })
+  }
+
+  const count = 1
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NoteForm loadFunction={loadDefaultValues} />
+      <Notes notes={notes} count={count} loadFunction={loadDefaultValues}  />
     </div>
   );
 }
 
 export default App;
+

@@ -1,0 +1,18 @@
+
+
+###
+
+GET http://localhost:7777/notes
+
+###
+
+POST http://localhost:7777/notes
+Content-Type: application/json
+
+{
+  "content": "First Note"
+}
+
+###
+
+DELETE http://localhost:7777/notes/1
